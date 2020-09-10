@@ -1,0 +1,38 @@
+LAB: Creating Virtual Machines 
+Objectives
+
+In this lab, you learn how to perform the following tasks:
+
+   -  Create several standard VMs
+
+   -  Create advanced VMs
+
+		STEPS
+	1: Create a utility virtual machine
+	gcloud config set compute/zone us-central1-b
+
+	gcloud compute instances create mato-vm --machine-type "n1-standard-1" --network-interface=no address
+	
+	2: Create a Windows virtual machine
+	gcloud config set compute/zone europe-west2-a
+	
+	gcloud compute instances create my-windows-vm --machine-type " n1-standard-2" --image-project "windows-server" --image "Windows Server 2016 Datacenter Core" --size=100GB --tags https
+	gcloud compute firewall-rules create my-firewall-rule --action= Allow destination= ingress --rules http:80 --target-tags= http.https
+	3: Create a custom virtual machine
+	 gcloud config set compute/zone us-west1-b 
+	 gloud compute instances create my-custom-vm --machine-type "custom" --custom-cpu= 6 --custom-memory= 32GB
+	 3.1: Connect via SSH to your custom VM
+	 gcloud compute ssh my-custom-vm
+	 -To see information about unused and used memory and swap space on your custom VM, run the following command:
+	 free
+	 result: you will see the amount of memory that's free in your custom vm
+	 To see details about the RAM installed on your VM, run the following command:
+	 sudo dmidecode -t 17
+	 result: you will get details about your ram 
+	 To verify the number of processors, run the following command:
+	 nproc
+	 result : the number of processsors in your virtual machine will be listed 
+	 To see details about the CPUs installed on your VM, run the following command:
+	 lscpu
+	 result: the number of vCPUS will be indicated which should be 6
+	 

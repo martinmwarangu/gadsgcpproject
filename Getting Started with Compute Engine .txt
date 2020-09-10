@@ -1,0 +1,50 @@
+LAB:Getting Started with Compute Engine 
+Objectives
+
+In this lab, you will learn how to perform the following tasks:
+
+    -Create a Compute Engine virtual machine using the Google Cloud Platform (GCP) Console.
+
+    -Create a Compute Engine virtual machine using the gcloud command-line interface.
+
+    -Connect between the two instances.
+	
+			TASKS 
+Task 1: Create first virtual machine 
+gcloud config set compute/zone us-central1-c	
+gcloud compute instances create my-vm-1 --machine-type "n1-standard-1" --image-project "debian-cloud" --image "debian-9-stretch-v20190213" --subnet "default" --tags http	
+gcloud compute firewall-rules create my-firewall-rule --action= Allow destination= ingress --rules http:80 --target-tags= http
+
+Task 2: Create second virtual machine using the gcloud command line:
+gcloud config set compute/zone us-central1-b
+gcloud compute instances create my-vm-2 --machine-type "n1-standard-1" --image-project "debian-cloud" --image "debian-9-stretch-v20190213" --subnet "default" 
+
+Task 3: Connect between VM instances
+-Connect to my-vm-2 via SSH
+gcloud compute ssh my-vm-2
+-Use the ping command to confirm that my-vm-2 can reach my-vm-1 over the network:
+ping my-vm-1
+result: it reveals the complete hostname of my-vm-1 including your project name
+-To abort the ping command press ctrl-c
+-SSH into my-vm-1 using the following command
+ssh my-vm-1
+If you are prompted about whether you want to continue connecting to a host with unknown authenticity, enter yes to confirm that you do.
+-Install the Nginx web server on my-vm-1
+sudo apt-get install nginx-light -y
+-Use the nano text editor to add a custom message to the home page of the web server:
+sudo nano /var/www/html/index.nginx-debian.html
+this will take you to a html page 
+-Use the arrow keys to move the cursor to the line just below the h1 header. Add text like this, and replace YOUR_NAME with your name: 
+"Hi from Martin"
+-Press Ctrl+O and then press Enter to save your edited file, and then press Ctrl+X to exit the nano text editor.
+-Confirm that the web server is serving your new page. At the command prompt on my-vm-1, execute this command:
+curl http://localhost/
+-The response will be the HTML source of the web server's home page, including your line of custom text.
+Exit my-vm-1 by running the following command
+exit
+To confirm that my-vm-2 can reach the web server on my-vm-1, at the command prompt on my-vm-2, execute this command:
+curl http://my-vm-1/
+-The response will again be the HTML source of the web server's home page, including your line of custom text.
+
+
+
