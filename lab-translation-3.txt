@@ -1,0 +1,52 @@
+Lab : App Dev: Setting up a Development Environment v1.1 
+Overview
+
+In this lab, you will provision a Google Compute Engine virtual machine and install software libraries for Node.js software development on Google Cloud Platform.
+
+Objectives
+
+In this lab, you will learn how to perform the following tasks:
+
+    -Provision a Google Compute Engine instance.
+
+    -Connect to the instance using SSH.
+
+    -Install software on the instance.
+
+    -Verify the software installation.
+
+	Task 1 Creating a Compute Engine Virtual Machine Instance
+gcloud config set compute/zone us-central1-a
+gcloud compute instances create dev-instance --machine type "n1-standard-1" --tags http  --scopes compute-rw,storage-ro
+gcloud compute firewall-rules create my-firewall-rule --action= Allow destination= ingress --rules http:80 --target-tags= http
+		SSH INTO YOUR VM
+gcloud compute ssh dev-instance
+	Task 2:Install software on the VM instance
+In the SSH session, to update the Debian package list, execute the following command
+sudo apt-get update
+To install Git, execute the following command
+sudo apt-get instsll git 
+if propmted press Y the enter
+To download the Node.js setup script, execute the following command
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+To install npm and Node.js, execute the following command
+sudo apt install nodejs
+	Task 3: Configure the VM to Run Application Software
+To check the version of Node.js, execute the following command
+node -v
+You should see the Node.js version number for version 6
+To clone the class repository, execute the following command
+git clone https://github.com/GoogleCloudPlatform/training-data-analyst
+To change the working directory, execute the following command
+cd ~/training-data-analyst/courses/developingapps/nodejs/devenv/
+To run a simple web server, execute the following command
+sudo node server/app.js
+To stop the application use ctrl-c
+To install the Node.js library for Compute Engine, execute the following command
+npm install
+To run a simple Node.js application that lists Compute Engine instances, execute the following command
+node list-gce-instances.js
+
+
+
+			
